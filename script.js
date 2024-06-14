@@ -3,7 +3,6 @@ const watchApiKey = 'YOUR_API_KEY_HERE'
 
 const dataToEnablePlayback = {
     apiUrl: `https://api.indee.tv/v2/watch/stream/${screener_key}/playback`,
-    loginApiUrl: 'https://api.indee.tv/v2/watch/auth/login',
     embeddablePlayerInitializationUrl: 'https://api.indee.tv/v2/watch/stream/player/init',
     embeddablePlayerTemplateURL: 'https://api.indee.tv/v2/watch/stream/player/view',
     apiKey: watchApiKey,
