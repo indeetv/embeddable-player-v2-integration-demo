@@ -28,6 +28,9 @@ Replace the **_YOUR_SCREENER_KEY_HERE_** and **_YOUR_API_KEY_HERE_** with the re
 - **embeddablePlayerInitializationUrl**: URL for loading the initialization script for the player.
 - **embeddablePlayerTemplateURL**: URL for fetching the embeddable player HTML template.
 - **apiKey**: API key for authentication.
+- **loginApiUrl**: URL for logging in the user for auth token to access playback api.
+- **authToken**: Token returned by the login api which will be used to access playback.
+
 
 ## Running the demo
 
@@ -74,7 +77,7 @@ This function fetches playback data from the API and then calls `getEmbeddablePl
 
 ### `init`
 
-This function initializes the player by loading the initialization script and fetching the playback data.
+This function initializes the player by loading the initialization script then taking user input and making login call and then fetching the playback data.
 
 ## Error Handling
 
