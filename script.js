@@ -1,5 +1,5 @@
 const dataToEnablePlayback = {
-    apiUrl: 'https://api.indee.tv/v2/watch/stream/scn-01j07ywpc6j3tjafevkwgcw9wge0u1ae/playback',
+    apiUrl: `https://api.indee.tv/v2/watch/stream/${YOUR_SCREENER_KEY_HERE}/playback`,
     embeddablePlayerInitializationUrl: 'https://api.indee.tv/v2/watch/stream/player/init',
     embeddablePlayerTemplateURL: 'https://api.indee.tv/v2/watch/stream/player/view',
     apiKey: 'YOUR_API_KEY_HERE',
