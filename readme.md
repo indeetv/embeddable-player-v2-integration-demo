@@ -6,7 +6,7 @@ be stored securely on your servers.**
 
 This project integrates the Indee embeddable video player using the Indee API. It fetches playback data and dynamically loads the player into the webpage.
 
-[!NOTE]
+> [!NOTE] 
 Replace the **_YOUR_SCREENER_KEY_HERE_** and **_YOUR_API_KEY_HERE_** with the respective keys.
 
 ## Table of Contents
