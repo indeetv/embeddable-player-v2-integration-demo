@@ -1,8 +1,13 @@
+const screener_key = 'YOUR_SCREENER_KEY_HERE'
+const watchApiKey = 'YOUR_API_KEY_HERE'
+
 const dataToEnablePlayback = {
-    apiUrl: `https://api.indee.tv/v2/watch/stream/scn-01j07ywpc6j3tjafevkwgcw9wge0u1ae/playback`,
+    apiUrl: `https://api.indee.tv/v2/watch/stream/${screener_key}/playback`,
+    loginApiUrl: 'https://api.indee.tv/v2/watch/auth/login',
     embeddablePlayerInitializationUrl: 'https://api.indee.tv/v2/watch/stream/player/init',
     embeddablePlayerTemplateURL: 'https://api.indee.tv/v2/watch/stream/player/view',
-    apiKey: 'YOUR_API_KEY_HERE',
+    apiKey: watchApiKey,
+    authToken: ''
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+
+    const logUserIn = async (accessToken) => {
+        try {
+            const response = await fetch(dataToEnablePlayback.loginApiUrl, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    Authorization: `Bearer ${dataToEnablePlayback.apiKey}`,
+                    Clientid: generateClientId(),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ type: 'pin', credentials: { pin: accessToken }, persist: false }),
+            });
+            const loginPayload = await response.json()
+            dataToEnablePlayback.authToken = loginPayload.token
+        } catch (error) {
+            console.error('Error for login api:', error);
+        }
+    }
+
     /**
      * Fetches the embeddable player HTML and initializes the Indee player
      * @param {Object} playbackData - Response from the playback API
@@ -47,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         playbackSourcesData: { drm: playbackData.drm, manifest: playbackData.manifest },
                         playbackMode: 'dash',
                         overlayWatermarkDetails: {},
-                        engagementInterval:{...playbackData.engagement}
+                        engagementInterval: { ...playbackData.engagement }
                     },
                     embeddablePlayerHtml,
                     'video_key',
@@ -65,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
-                    Authorization: `Bearer ${dataToEnablePlayback.apiKey}`,
+                    Authorization: `JWT ${dataToEnablePlayback.authToken}`,
                     Clientid: generateClientId(),
                     'Content-Type': 'application/json',
                 },
@@ -81,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const init = async () => {
         try {
             await loadScript(dataToEnablePlayback.embeddablePlayerInitializationUrl);
+            const userInput = prompt("Please enter your access token");
+            await logUserIn(userInput)
             await fetchPlaybackData();
         } catch (error) {
             console.error('Error initializing the player:', error);
