@@ -72,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         playbackSourcesData: { drm: playbackData.drm, manifest: playbackData.manifest },
                         playbackMode: 'dash',
                         overlayWatermarkDetails: {},
-                        engagementInterval: { ...playbackData.engagement }
+                        engagementData: { push_interval:playbackData.engagement.push_interval,
+                                         endpoint:"https://api.indee.tv/v2/watch/stream/view-engagement" }
                     },
                     embeddablePlayerHtml,
                     'video_key',
